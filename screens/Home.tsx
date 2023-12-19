@@ -1,12 +1,30 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { SOLARIZED, RAINBOW, FRONTEND_MASTERS } from '../data/colors';
+import PalettePreview from '../components/PalettePreview';
+import { Palette } from '../types/colors';
+
+const COLOR_PALETTES: Palette[] = [
+  { paletteName: 'Solarized', colors: SOLARIZED },
+  { paletteName: 'Rainbow', colors: RAINBOW },
+  { paletteName: 'Frontend Masters', colors: FRONTEND_MASTERS },
+];
 
 const Home = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.navigate('ColorPalette')}>
-        <Text style={styles.title}>Go to Color Palette</Text>
-      </TouchableOpacity>
+      <FlatList
+        data={COLOR_PALETTES}
+        keyExtractor={(item) => item.paletteName}
+        renderItem={({ item }) => (
+          <PalettePreview
+            handlePress={() => {
+              navigation.navigate('ColorPalette', item);
+            }}
+            colorPalette={item}
+          />
+        )}
+      />
     </View>
   );
 };
@@ -19,8 +37,6 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     paddingHorizontal: 24,
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
     backgroundColor: 'white',
   },
   title: {
