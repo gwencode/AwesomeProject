@@ -1,7 +1,8 @@
 import React from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
 import { SOLARIZED, RAINBOW, FRONTEND_MASTERS } from '../data/colors';
 import PalettePreview from '../components/PalettePreview';
+import Counter from '../components/Counter';
 import { Palette } from '../types/colors';
 
 const COLOR_PALETTES: Palette[] = [
@@ -14,6 +15,7 @@ const Home = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <FlatList
+        style={styles.list}
         data={COLOR_PALETTES}
         keyExtractor={(item) => item.paletteName}
         renderItem={({ item }) => (
@@ -25,19 +27,21 @@ const Home = ({ navigation }) => {
           />
         )}
       />
+      <Counter />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-  },
   container: {
     paddingVertical: 16,
     paddingHorizontal: 24,
-    flex: 1,
     backgroundColor: 'white',
+    flex: 1,
+    gap: 10,
+  },
+  list: {
+    flexGrow: 0,
   },
   title: {
     fontWeight: 'bold',
