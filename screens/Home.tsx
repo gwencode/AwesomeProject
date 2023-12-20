@@ -30,6 +30,17 @@ const Home = ({ navigation }) => {
     fetchColorPalettes();
   }, [fetchColorPalettes]);
 
+  const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
+
+  const handleRefresh = useCallback(async () => {
+    setIsRefreshing(true);
+    await fetchColorPalettes();
+    // Simulate a delay with setTimeout
+    setTimeout(() => {
+      setIsRefreshing(false);
+    }, 1000);
+  }, [fetchColorPalettes]);
+
   return (
     <View style={styles.container}>
       <FlatList
@@ -44,6 +55,8 @@ const Home = ({ navigation }) => {
             colorPalette={item}
           />
         )}
+        refreshing={isRefreshing}
+        onRefresh={handleRefresh}
       />
       <Counter />
     </View>
