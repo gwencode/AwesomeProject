@@ -1,12 +1,7 @@
 export type Color = {
   colorName: string;
   hexCode: string;
-};
-
-export type SelectedColor = {
-  colorName: string;
-  hexCode: string;
-  selected: boolean;
+  selected?: boolean;
 };
 
 export type Palette = {

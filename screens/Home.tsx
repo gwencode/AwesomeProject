@@ -7,16 +7,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-// import { SOLARIZED, RAINBOW, FRONTEND_MASTERS } from '../data/colors';
 import PalettePreview from '../components/PalettePreview';
 import Counter from '../components/Counter';
 import { Palette } from '../types/colors';
-
-// const COLOR_PALETTES: Palette[] = [
-//   { paletteName: 'Solarized', colors: SOLARIZED },
-//   { paletteName: 'Rainbow', colors: RAINBOW },
-//   { paletteName: 'Frontend Masters', colors: FRONTEND_MASTERS },
-// ];
 
 const Home = ({ navigation }) => {
   const [colorPalettes, setColorPalettes] = useState<Palette[]>([]);

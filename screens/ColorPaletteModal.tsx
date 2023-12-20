@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {
+  Button,
   FlatList,
   SafeAreaView,
   StyleSheet,
@@ -10,31 +11,33 @@ import {
   View,
 } from 'react-native';
 
-import { Color, SelectedColor } from '../types/colors';
+import { Color } from '../types/colors';
 import { COLORS } from '../data/colors';
 
 const ColorPaletteModal = () => {
   const [name, setName] = useState<string>('');
 
-  const selectedColors: SelectedColor[] = COLORS.map((color: Color) => ({
+  const selectedColors: Color[] = COLORS.map((color: Color) => ({
     ...color,
     selected: false,
   }));
 
-  const [colors, setColors] = useState<SelectedColor[]>(selectedColors);
+  const [colors, setColors] = useState<Color[]>(selectedColors);
 
-  const handleSwitchChange = (
-    event: SwitchChangeEvent,
-    color: SelectedColor,
-  ) => {
+  const handleSwitchChange = (event: SwitchChangeEvent, color: Color) => {
     const selected = event.nativeEvent.value;
-    const newSelectedColors: SelectedColor[] = colors.map((c) => {
+    const newSelectedColors: Color[] = colors.map((c) => {
       if (c.colorName === color.colorName) {
         return { ...color, selected };
       }
       return c;
     });
     setColors(newSelectedColors);
+  };
+
+  const handleSubmit = () => {
+    const filteredColors = colors.filter((color) => color.selected);
+    console.log(filteredColors);
   };
 
   return (
@@ -54,6 +57,7 @@ const ColorPaletteModal = () => {
           </View>
         )}
       />
+      <Button title="Submit" onPress={handleSubmit} />
     </SafeAreaView>
   );
 };
