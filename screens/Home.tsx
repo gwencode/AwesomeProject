@@ -11,7 +11,11 @@ import PalettePreview from '../components/PalettePreview';
 import Counter from '../components/Counter';
 import { Palette } from '../types/colors';
 
-const Home = ({ navigation }) => {
+const Home = ({ navigation, route }) => {
+  const newColorPalette: Palette = route.params
+    ? route.params.newColorPalette
+    : undefined;
+
   const [colorPalettes, setColorPalettes] = useState<Palette[]>([]);
 
   const fetchColorPalettes = useCallback(async () => {
@@ -40,12 +44,18 @@ const Home = ({ navigation }) => {
     }, 1000);
   }, [fetchColorPalettes]);
 
+  useEffect(() => {
+    if (newColorPalette) {
+      setColorPalettes((palettes) => [newColorPalette, ...palettes]);
+    }
+  }, [newColorPalette]);
+
   return (
     <View style={styles.container}>
       <FlatList
         style={styles.list}
         data={colorPalettes}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item) => item.paletteName}
         renderItem={({ item }) => (
           <PalettePreview
             handlePress={() => {

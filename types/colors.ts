@@ -5,7 +5,7 @@ export type Color = {
 };
 
 export type Palette = {
-  id: number;
+  id?: number;
   paletteName: string;
   colors: Color[];
 };

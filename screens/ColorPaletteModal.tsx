@@ -12,10 +12,10 @@ import {
   View,
 } from 'react-native';
 
-import { Color } from '../types/colors';
+import { Color, Palette } from '../types/colors';
 import { COLORS } from '../data/colors';
 
-const ColorPaletteModal = () => {
+const ColorPaletteModal = ({ navigation }) => {
   const [name, setName] = useState<string>('');
 
   const selectedColors: Color[] = COLORS.map((color: Color) => ({
@@ -39,11 +39,16 @@ const ColorPaletteModal = () => {
   const handleSubmit = useCallback(() => {
     if (!name) {
       Alert.alert('Please enter a name for your color scheme');
+    } else {
+      const filteredColors = colors.filter((color) => color.selected);
+      const newColorPalette: Palette = {
+        paletteName: name,
+        colors: filteredColors,
+      };
+      console.log(newColorPalette);
+      navigation.navigate('Home', { newColorPalette });
     }
-    const filteredColors = colors.filter((color) => color.selected);
-    console.log(filteredColors);
-    console.log(name);
-  }, [colors, name]);
+  }, [colors, name, navigation]);
 
   return (
     <SafeAreaView style={styles.container}>
