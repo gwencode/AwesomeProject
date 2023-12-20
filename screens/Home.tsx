@@ -1,6 +1,12 @@
 import React from 'react';
 import { useCallback, useEffect, useState } from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 // import { SOLARIZED, RAINBOW, FRONTEND_MASTERS } from '../data/colors';
 import PalettePreview from '../components/PalettePreview';
 import Counter from '../components/Counter';
@@ -57,6 +63,15 @@ const Home = ({ navigation }) => {
         )}
         refreshing={isRefreshing}
         onRefresh={handleRefresh}
+        ListHeaderComponent={
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('ColorPaletteModal');
+            }}
+          >
+            <Text>Launch Modal</Text>
+          </TouchableOpacity>
+        }
       />
       <Counter />
     </View>
