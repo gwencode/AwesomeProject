@@ -1,17 +1,17 @@
 import React from 'react';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 const Counter = () => {
   const [count, setCount] = useState(0);
 
-  const handleIncrement = () => {
+  const handleIncrement = useCallback(() => {
     setCount((prevCount) => prevCount + 1);
-  };
+  }, []);
 
-  const handleDecrement = () => {
+  const handleDecrement = useCallback(() => {
     setCount((prevCount) => prevCount - 1);
-  };
+  }, []);
 
   return (
     <View>
