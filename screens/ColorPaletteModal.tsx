@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
-  Button,
+  Alert,
   FlatList,
   SafeAreaView,
   StyleSheet,
@@ -8,6 +8,7 @@ import {
   SwitchChangeEvent,
   Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from 'react-native';
 
@@ -35,15 +36,19 @@ const ColorPaletteModal = () => {
     setColors(newSelectedColors);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = useCallback(() => {
+    if (!name) {
+      Alert.alert('Please enter a name for your color scheme');
+    }
     const filteredColors = colors.filter((color) => color.selected);
     console.log(filteredColors);
-  };
+    console.log(name);
+  }, [colors, name]);
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text>Name of your color scheme</Text>
-      <TextInput style={styles.input} value={name} onChangeText={setName} />
+      <Text style={styles.name}>Name of your color scheme</Text>
+      <TextInput style={styles.textInput} value={name} onChangeText={setName} />
       <FlatList
         data={colors}
         keyExtractor={(item) => item.colorName}
@@ -57,7 +62,9 @@ const ColorPaletteModal = () => {
           </View>
         )}
       />
-      <Button title="Submit" onPress={handleSubmit} />
+      <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
+        <Text style={styles.submitText}>Submit</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
@@ -69,7 +76,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     flex: 1,
   },
-  input: {
+  name: {
+    color: 'black',
+    marginBottom: 10,
+  },
+  textInput: {
     borderColor: 'grey',
     borderWidth: 1,
     padding: 10,
@@ -84,6 +95,17 @@ const styles = StyleSheet.create({
     borderTopColor: 'grey',
     borderTopWidth: 1,
     paddingVertical: 10,
+  },
+  submitButton: {
+    height: 40,
+    backgroundColor: 'teal',
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  submitText: {
+    color: 'white',
+    fontWeight: 'bold',
   },
 });
 
