@@ -22,7 +22,12 @@ const SwitchColorsList = ({ items, handleSwitch }: SwitchColorsListProps) => {
       keyExtractor={(item) => item.colorName}
       renderItem={({ item }) => (
         <View style={styles.switchInput}>
-          <Text>{item.colorName}</Text>
+          <View style={styles.colorPreview}>
+            <View
+              style={[styles.colorRectangle, { backgroundColor: item.hexCode }]}
+            />
+            <Text>{item.colorName}</Text>
+          </View>
           <Switch
             value={item.selected}
             onChange={(event) => handleSwitch(event, item)}
@@ -34,6 +39,10 @@ const SwitchColorsList = ({ items, handleSwitch }: SwitchColorsListProps) => {
 };
 
 const styles = StyleSheet.create({
+  colorPreview: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   switchInput: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -41,6 +50,16 @@ const styles = StyleSheet.create({
     borderTopColor: 'grey',
     borderTopWidth: 1,
     paddingVertical: 10,
+  },
+  colorRectangle: {
+    height: 30,
+    width: 30,
+    marginRight: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.3,
+    shadowRadius: 1,
+    elevation: 2,
   },
 });
 
