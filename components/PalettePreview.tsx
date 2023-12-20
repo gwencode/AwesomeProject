@@ -17,7 +17,7 @@ const PalettePreview = ({ handlePress, colorPalette }: PalettePreviewProps) => {
   return (
     <View>
       <TouchableOpacity style={styles.section} onPress={handlePress}>
-        <Text style={styles.title}>{colorPalette.paletteName}</Text>
+        <Text style={styles.subtitle}>{colorPalette.paletteName}</Text>
         <FlatList
           style={styles.list}
           data={colorPalette.colors.slice(0, 5)}
@@ -37,10 +37,10 @@ const styles = StyleSheet.create({
   section: {
     marginBottom: 10,
   },
-  title: {
+  subtitle: {
     fontWeight: 'bold',
     color: 'black',
-    fontSize: 18,
+    fontSize: 16,
   },
   list: {
     flexDirection: 'row',

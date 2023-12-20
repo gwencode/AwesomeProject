@@ -36,6 +36,7 @@ const App: React.FC = () => {
         <RootStack.Screen
           name="ColorPaletteModal"
           component={ColorPaletteModal}
+          options={{ title: 'Add a color scheme' }}
         />
       </RootStack.Navigator>
     </NavigationContainer>
