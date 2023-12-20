@@ -1,19 +1,18 @@
 import React, { useState, useCallback } from 'react';
 import {
   Alert,
-  FlatList,
   SafeAreaView,
   StyleSheet,
-  Switch,
   SwitchChangeEvent,
   Text,
   TextInput,
   TouchableOpacity,
-  View,
 } from 'react-native';
 
 import { Color, Palette } from '../types/colors';
 import { COLORS } from '../data/colors';
+
+import SwitchColorsList from '../components/SwitchColorsList';
 
 const ColorPaletteModal = ({ navigation }) => {
   const [name, setName] = useState<string>('');
@@ -58,19 +57,7 @@ const ColorPaletteModal = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
       <Text style={styles.name}>Name of your color scheme</Text>
       <TextInput style={styles.textInput} value={name} onChangeText={setName} />
-      <FlatList
-        data={colors}
-        keyExtractor={(item) => item.colorName}
-        renderItem={({ item }) => (
-          <View style={styles.switchInput}>
-            <Text>{item.colorName}</Text>
-            <Switch
-              value={item.selected}
-              onChange={(event) => handleSwitchChange(event, item)}
-            />
-          </View>
-        )}
-      />
+      <SwitchColorsList items={colors} handleSwitch={handleSwitchChange} />
       <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
         <Text style={styles.submitText}>Submit</Text>
       </TouchableOpacity>
@@ -95,15 +82,6 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     marginBottom: 20,
-  },
-  switchInput: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 10,
-    borderTopColor: 'grey',
-    borderTopWidth: 1,
-    paddingVertical: 10,
   },
   submitButton: {
     height: 40,
