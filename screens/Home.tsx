@@ -1,23 +1,41 @@
 import React from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
-import { SOLARIZED, RAINBOW, FRONTEND_MASTERS } from '../data/colors';
+// import { SOLARIZED, RAINBOW, FRONTEND_MASTERS } from '../data/colors';
 import PalettePreview from '../components/PalettePreview';
 import Counter from '../components/Counter';
 import { Palette } from '../types/colors';
 
-const COLOR_PALETTES: Palette[] = [
-  { paletteName: 'Solarized', colors: SOLARIZED },
-  { paletteName: 'Rainbow', colors: RAINBOW },
-  { paletteName: 'Frontend Masters', colors: FRONTEND_MASTERS },
-];
+// const COLOR_PALETTES: Palette[] = [
+//   { paletteName: 'Solarized', colors: SOLARIZED },
+//   { paletteName: 'Rainbow', colors: RAINBOW },
+//   { paletteName: 'Frontend Masters', colors: FRONTEND_MASTERS },
+// ];
 
 const Home = ({ navigation }) => {
+  const [colorPalettes, setColorPalettes] = useState<Palette[]>([]);
+
+  const fetchColorPalettes = useCallback(async () => {
+    const result = await fetch(
+      'https://color-palette-api.kadikraman.now.sh/palettes',
+    );
+
+    if (result.ok) {
+      const palettes = await result.json();
+      setColorPalettes(palettes);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchColorPalettes();
+  }, [fetchColorPalettes]);
+
   return (
     <View style={styles.container}>
       <FlatList
         style={styles.list}
-        data={COLOR_PALETTES}
-        keyExtractor={(item) => item.paletteName}
+        data={colorPalettes}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <PalettePreview
             handlePress={() => {

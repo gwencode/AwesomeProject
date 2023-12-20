@@ -4,6 +4,7 @@ export type Color = {
 };
 
 export type Palette = {
+  id: number;
   paletteName: string;
   colors: Color[];
 };
