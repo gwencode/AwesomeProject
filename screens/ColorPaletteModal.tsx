@@ -41,6 +41,10 @@ const ColorPaletteModal = ({ navigation }) => {
       Alert.alert('Please enter a name for your color scheme');
     } else {
       const filteredColors = colors.filter((color) => color.selected);
+      if (filteredColors.length < 3) {
+        Alert.alert('Please select at least 3 colors');
+        return;
+      }
       const newColorPalette: Palette = {
         paletteName: name,
         colors: filteredColors,
